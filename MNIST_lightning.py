@@ -45,10 +45,14 @@ class CNN_Module(pl.LightningModule):
 
     def __init__(self, model):
 
-        super(CNN_Module, self).__init__()
+        super().__init__()
 
         self.model = model
         self.ce_loss = torch.nn.CrossEntropyLoss()
+        
+        self.training_step_outputs = []
+        self.validation_step_outputs = []
+        self.test_step_outputs = []
 
 
     def forward(self, input: torch.Tensor, **kwargs) -> torch.Tensor:
@@ -63,11 +67,16 @@ class CNN_Module(pl.LightningModule):
 
         loss_dict = { "loss": loss }
 
+        self.training_step_outputs.append(loss_dict)
+        
         self.log_dict(loss_dict)
+        
         return loss_dict
     
     
-    def training_epoch_end(self, outputs):
+    def on_train_epoch_end(self):
+        
+        outputs = self.training_step_outputs
 
         avg_loss = torch.stack([x["loss"] for x in outputs]).mean() 
         self.log_dict({
@@ -77,6 +86,7 @@ class CNN_Module(pl.LightningModule):
           prog_bar=True,
           logger=True,
         )
+        self.training_step_outputs.clear()
     
     
     def validation_step(self, batch, batch_idx):
@@ -91,13 +101,15 @@ class CNN_Module(pl.LightningModule):
           "accuracy": accuracy
         }
 
+        self.validation_step_outputs.append(loss_dict)
         self.log_dict(loss_dict)
         return loss_dict
 
     
     
-    def validation_epoch_end(self, outputs):
+    def on_validation_epoch_end(self):
     
+        outputs = self.validation_step_outputs
         avg_loss = torch.stack([x["loss"] for x in outputs]).mean() 
         accuracy = torch.stack([x["accuracy"] for x in outputs]).mean() 
         self.log_dict({
@@ -108,6 +120,7 @@ class CNN_Module(pl.LightningModule):
           prog_bar=True,
           logger=True,
         )
+        self.validation_step_outputs.clear()
     
     
     def test_step(self, batch, batch_idx):
@@ -121,14 +134,17 @@ class CNN_Module(pl.LightningModule):
             "loss": loss,
             "accuracy": accuracy
         }
+        
+        self.test_step_outputs.append(loss_dict)
 
         self.log_dict(loss_dict)
         return loss_dict
 
 
 
-    def test_epoch_end(self, outputs):
+    def on_test_epoch_end(self):
 
+        outputs = self.test_step_outputs
         avg_loss = torch.stack([x["loss"] for x in outputs]).mean()
         accuracy = torch.stack([x["accuracy"] for x in outputs]).mean() 
         self.log_dict({
@@ -139,6 +155,8 @@ class CNN_Module(pl.LightningModule):
           prog_bar=True,
           logger=True,
         )
+        self.test_step_outputs.clear()
+
 
 
     def configure_optimizers(self):

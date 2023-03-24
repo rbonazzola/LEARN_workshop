@@ -1,0 +1,51 @@
+FROM ubuntu:latest
+# FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu20.04
+
+RUN apt-get update 
+RUN apt-get install -y \
+    curl \
+    ca-certificates \
+    vim \
+    sudo \
+    git \
+    bzip2 \
+    libx11-6 \
+    wget \
+    zip tar unzip \
+    gcc \
+    tmux \
+    make \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update
+RUN apt-get install -y --reinstall build-essential
+RUN apt-get install -y libboost-dev
+RUN apt-get install lsb-release -y
+
+
+# Install Miniconda
+RUN curl -so ~/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+ && chmod +x ~/miniconda.sh \
+ && ~/miniconda.sh -b -p ~/miniconda \
+ && rm ~/miniconda.sh
+ENV PATH=/root/miniconda/bin:$PATH
+ENV CONDA_AUTO_UPDATE_CONDA=false
+
+# Create e.g. a Python 3.10 environment.
+RUN /root/miniconda/bin/conda install conda-build
+RUN /root/miniconda/bin/conda create -y --name pytorch python=3.10
+RUN /root/miniconda/bin/conda clean -ya
+
+ENV CONDA_DEFAULT_ENV=pytorch
+ENV CONDA_PREFIX=/root/miniconda/envs/$CONDA_DEFAULT_ENV
+ENV PATH=$CONDA_PREFIX/bin:$PATH
+
+RUN conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
+# RUN conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+RUN conda install tqdm -c conda-forge
+RUN conda install jupyter -c anaconda
+RUN conda install pytorch-lightning==1.9.3 -c conda-forge
+
+RUN conda install mlflow -c conda-forge
+RUN conda install -c conda-forge "ray-tune"
+RUN pip install rich
