@@ -4,8 +4,9 @@ Docker is a software platform that simplifies the process of building, running, 
 
 Docker has been set up for each user of the DGX and _all workloads must be executed through Docker containers._
 
-This section will _not_ cover how to build your own Docker image.
+**_Note_**: This section will _not_ cover how to build your own Docker image. Instead, we will use an image that I prepared beforehand.
 
+___
 ### Download (or build) a Docker image
 In order to run the code in this tutorial, we will use a Docker image hosted on DockerHub.
 
@@ -27,6 +28,7 @@ docker build -f Dockerfile_pt113_cu117_ptl19 -t rbonazzola/learn_workshop:sessio
 
 In this case, the _name_ of the image is `rbonazzola/learn_workshop` and the _tag_ is `session_2`.
 
+___
 ### Examine the Docker images
 To examine the Docker images available locally, run
 
@@ -44,9 +46,17 @@ To run a container in interactive mode, add the `-it` option.
 docker run -it rbonazzola/learn_workshop:session_2
 ```
 
+If we wanted to execute a second shell from _the same container_, we can `docker ps` to see this container's ID, then do
+
+```bash
+docker exec -it <CONTAINER_ID> bash
+```
+
+(`docker run` launches a new container, `docker exec` executes a command in a container that is already running.)
+
 To quit the container, you can use `ctrl+D` or run `exit`. This will _stop_ the container but will not _kill_ it, as you can see by running `docker ps -a`.
 
-If you want it to be killed automatically after you exit it, use `docker run` with the `--rm` option.
+If you want the container to be killed automatically after you exit it, use `docker run` with the `--rm` option.
 
 In the following, we will make the `docker run` increasingly complex by adding more options.
 
