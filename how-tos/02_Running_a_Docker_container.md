@@ -1,6 +1,6 @@
 # Running and managing Docker containers
 
-Docker is a software platform that simplifies the process of building, running, managing and distributing applications. It packages applications as images that contain everything needed to run them: code, runtime environment, libraries, and configuration. Images run in containers, which are discrete processes that take up only as many resources as any other executable.
+Docker is a software platform that simplifies the process of building, running, managing and distributing applications. It packages applications as **images** that contain everything needed to run them: code, runtime environment, libraries, and configuration. Images run in **containers**, which are discrete processes that take up only as many resources as any other executable.
 
 Docker has been set up for each user of the DGX and **all workloads must be executed through Docker containers.**
 
