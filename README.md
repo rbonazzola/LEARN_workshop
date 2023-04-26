@@ -23,6 +23,10 @@ The folder `notebooks` contains Jupyter notebooks for previous workshop sessions
 - [Session 1](notebooks/LEARN_workshop_session1.ipynb) explores some features of the DGX A100 useful for deep learning, such as 16-bit precision, using plain PyTorch and also PyTorch Lightning.
 - [Session 2](notebooks/LEARN_workshop_session2.ipynb) covers the implementation of a simple DL model (for MNIST digit recognition) using PyTorch Lightning, and also how to log model information using MLflow.
 
+## Dockerfiles
+The `docker` folder contains `Dockerfile`'s that you can use as a reference to build your own.
+
+___
 ## References
 **Hardware**
 - [DGX A100 white paper](https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/dgx-a100/dgxa100-system-architecture-white-paper.pdf)
