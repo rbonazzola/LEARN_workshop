@@ -20,7 +20,7 @@ This will create a file called `$HOME/singularity_images/myUbuntu.sif` based on 
 
 **Tip:** add a line `export SIF_FOLDER=$HOME/singularity_images` (change by another location if needed) to your `~/.bashrc` or `~/.bash_profile` script, and save all your .sif files in that location.
 
-To submit a job using Singularity, you can write a script like the following (fill in the env variables appropriately):
+To submit a job using Singularity, you can write a script like the following, which we will call `launch_singularity_job` (fill in the env variables appropriately):
 
 ```
 #!/bin/bash
@@ -42,6 +42,10 @@ singularity exec \
 $SIF \
 sh -c "$CMD"
 ```
+
+Then you can submit this job as:
+
+```qsub -v ENVVAR1=... -v ENVVAR2=... -cwd -l h_rt=8:00:00 -l h_vmem=8g launch_singularity_job```
 
 *Note:* Take into account the Nvidia drivers' versions installed in each of the GPU nodes, when deciding which DL library to install in your image. At this moment (12-05-2023) these versions were:
 - ARC3 K80 nodes: 460.73.01, CUDA version: 11.2.
