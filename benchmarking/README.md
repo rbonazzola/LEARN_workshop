@@ -11,7 +11,10 @@ The queue scheduler on ARC is SGE (Son of Grid Engine).
 
 To create the SIF file from a Docker image hosted on DockerHub, you can execute, e.g.
 
-```singularity pull $HOME/singularity_images/myUbuntu.sif docker://ubuntu:latest```
+```
+module load singularity
+singularity pull $HOME/singularity_images/myUbuntu.sif docker://ubuntu:latest
+```
 
 This will create a file called `$HOME/singularity_images/myUbuntu.sif` based on the image `ubuntu:latest` hosted on DockerHub.
 
