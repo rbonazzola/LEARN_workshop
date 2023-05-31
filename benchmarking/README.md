@@ -54,7 +54,7 @@ Then you can submit this job as:
 *Note:* Take into account the Nvidia drivers' versions installed in each of the GPU nodes, when deciding which DL library to install in your image. At this moment (12-05-2023) these versions were:
 - ARC3 K80 nodes: 460.73.01, CUDA version: 11.2.
 - ARC3 P100 nodes: 525.85.12, CUDA Version: 12.0.
-- ARC4 V100 nodes: ???
+- ARC4 V100 nodes: 525.85.12, CUDA Version: 12.0.
 
 ___
 ## JADE2
