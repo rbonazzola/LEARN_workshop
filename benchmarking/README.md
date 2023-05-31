@@ -78,11 +78,11 @@ srun -I \
 
 In batch mode (this doesn't work though, see Note 2 below):
 ```
-sbatch
+sbatch \
 -t 0-10:00 \
 --gres gpu:1 \
 --partition=devel \
-/jmain02/apps/singularity/singinteractive $SIF \ 
+/jmain02/apps/singularity/singbatch $SIF \ 
 $SCRIPT
 ```
 
