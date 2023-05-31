@@ -19,6 +19,12 @@ singularity pull $HOME/singularity_images/myUbuntu.sif docker://ubuntu:latest
 
 This will create a file called `$HOME/singularity_images/myUbuntu.sif` based on the image `ubuntu:latest` hosted on DockerHub.
 
+For the Docker image we're using in this workshop, run:
+
+```
+singularity pull $HOME/singularity_images/learn.sif docker://rbonazzola/learn_workshop:session_2
+```
+
 **Tip:** add a line `export SIF_FOLDER=$HOME/singularity_images` (change by another location if needed) to your `~/.bashrc` or `~/.bash_profile` script, and save all your .sif files in that location.
 
 To submit a job using Singularity, you can write a script like the following, which we will call `launch_singularity_job` (fill in the env variables appropriately):
