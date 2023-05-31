@@ -36,6 +36,38 @@ sh -c "$CMD"
 ```
 
 ## JADE2
-See the [Docs](https://docs.jade.ac.uk/en/latest/jade/containers.html#singularity-containers).
-  
+JADE2 uses Slurm as queue manager. The most important commands to know are `srun`, `sbatch` and `squeue` (or `squeue -u $(whoami)` to status of your own processes).
+
+You can use Docker and Singularity, although the first has many limitations and only containers that are already present on the system can be used. That's why we will focus on Singularity.
+
+Singularity can be used in interactive or batch mode, by means of the commands `/jmain02/apps/singularity/singinteractive` and `/jmain02/apps/singularity/singbatch`, respectively, which are custom JADE wrappers.
+
 Importantly, your image must contain two folders, `/tmp` and `/local_scratch`.
+
+In interactive mode:
+```
+srun -I \
+--pty \
+-t 0-10:00 \
+--gres gpu:1 \
+--partition=devel \
+/jmain02/apps/singularity/singinteractive $SIF
+```
+
+In batch mode mode:
+```
+sbatch
+-t 0-10:00 \
+--gres gpu:1 \
+--partition=devel \
+/jmain02/apps/singularity/singinteractive $SIF \ 
+$SCRIPT
+```
+
+where `SIF` env variable contains the path to your SIF image.
+
+For more information, see the [Docs](https://docs.jade.ac.uk/en/latest/jade/containers.html#singularity-containers). 
+
+*Note 1*: The docs refer to some Singularity images that are supposed to be available on the system under `/jmain02/apps/singularity/singularity-images/`, although I hvaen't been able to find this folder.  
+
+*Note 2*: I have run into errors when requesting GPUs via Singularity. I believe there is a problem in the `singbatch` script (see [this old issue](https://github.com/jade-hpc-gpu/jade-hpc-gpu.github.io/issues/82)).
