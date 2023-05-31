@@ -36,8 +36,11 @@ CMD=...
 
 module load singularity
 
+export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0
+
 singularity exec \
 --bind $SOURCE_FOLDER:$TARGET_FOLDER \
+--nv \
 --env ENVVAR1=$ENVVAR1 \
 --env ENVVAR2=$ENVVAR2 \
 $SIF \
