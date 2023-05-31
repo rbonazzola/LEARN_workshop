@@ -13,6 +13,7 @@ To create the SIF file from a Docker image hosted on DockerHub, you can execute,
 
 ```
 module load singularity
+mkdir $HOME/singularity_images # or whichever location you prefer
 singularity pull $HOME/singularity_images/myUbuntu.sif docker://ubuntu:latest
 ```
 
