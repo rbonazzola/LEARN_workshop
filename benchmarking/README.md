@@ -3,19 +3,19 @@ In this section, we'll see how to leverage what we have done so far on Docker, t
 
 ## Singularity
 Both ARC and JADE2 provide Singularity as containerisation technology.
-Fortunately, Singularity images can be easily generated from the corresponding Docker images.
+Fortunately, Singularity images can be easily generated from the corresponding Docker images, as we'll see below.
 
-To do this, you can execute, e.g.
+___
+## ARC3 and ARC4
+The queue scheduler on ARC is SGE (Son of Grid Engine).
+
+To create the SIF file from a Docker image hosted on DockerHub, you can execute, e.g.
 
 ```singularity pull $HOME/singularity_images/myUbuntu.sif docker://ubuntu:latest```
 
 This will create a file called `$HOME/singularity_images/myUbuntu.sif` based on the image `ubuntu:latest` hosted on DockerHub.
 
 **Tip:** add a line `export SIF_FOLDER=$HOME/singularity_images` (change by another location if needed) to your `~/.bashrc` or `~/.bash_profile` script, and save all your .sif files in that location.
-
-___
-## ARC3 and ARC4
-The queue scheduler on ARC is SGE (Son of Grid Engine).
 
 To submit a job using Singularity, you can write a script like the following (fill in the env variables appropriately):
 
@@ -65,7 +65,7 @@ srun -I \
 /jmain02/apps/singularity/singinteractive $SIF
 ```
 
-In batch mode mode:
+In batch mode (this doesn't work though, see Note 2 below):
 ```
 sbatch
 -t 0-10:00 \
