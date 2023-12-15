@@ -84,8 +84,8 @@ srun -I \
 ```
 where `SIF` env variable contains the path to your SIF image.
 
-### Singularity in interactive mode
-In batch mode, I've noticed the provided script `singbatch` doesn't work. By examining this script, I noticed there seems to be a misplaced argument in the `singularity exec` command ((see [this old issue](https://github.com/jade-hpc-gpu/jade-hpc-gpu.github.io/issues/82) that reports the same problem). Namely, the image name (`$1` argument) should be placed after all the options, and immediately before the script (`$2` argument).
+### Singularity in batch mode
+In batch mode, I've noticed the provided script `singbatch` doesn't work. By examining this script, I noticed there seems to be a misplaced argument in the `singularity exec` command (see [this old issue](https://github.com/jade-hpc-gpu/jade-hpc-gpu.github.io/issues/82) that reports the same problem). Namely, the image name (`$1` argument) should be placed after all the options, and immediately before the script (`$2` argument).
 To circumvent this problem, you can just copy this script in some location of yours and modify this line accordingly.
 Assuming the new `singbatch` script is placed in your current working directory, you can execute the following command to submit a batch process running Singularity to the Slurm queue:
 
@@ -98,6 +98,7 @@ sbatch \
 $SCRIPT
 ```
 
+`partition` can also be `small` or `big`.
 For more information, see the [Docs](https://docs.jade.ac.uk/en/latest/jade/containers.html#singularity-containers). 
 
 *Note 1*: The docs refer to some Singularity images that are supposed to be available on the system under `/jmain02/apps/singularity/singularity-images/`, although I hvaen't been able to find this folder.  
